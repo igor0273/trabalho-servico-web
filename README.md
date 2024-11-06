@@ -80,9 +80,9 @@ A entidade **Funcionario** representa os dados dos funcionarios cadastradas.
 ```json
 {
   "codigo": 1,
-  "cpf": "12345678900",
+  "cpf": "123456789",
   "nome": "João Silva",
-  "rg": "12345678974",
+  "rg": "12345678",
   "empresa": 1
 }
 ```
