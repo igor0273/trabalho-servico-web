@@ -22,3 +22,17 @@ Esta API foi projetada para facilitar o gerenciamento de informações de **empr
 ## Uso
 A API está estruturada para gerenciar duas entidades principais: Empresa e Funcionário. Cada entidade tem seu próprio conjunto de endpoints para manipulação dos dados.
 
+##Endpoints
+###Empresa
+ GET /empresa: Retorna todas as empresas.
+ POST /empresa: Adiciona uma nova empresa.
+ PUT /empresa: Atualiza uma empresa existente.
+ GET /empresa/{codigo}: Retorna uma empresa específica pelo codigo.
+ DELETE /empresa/{codigo}: Remove uma empresa pelo codigo.
+###Funcionário
+GET /funcionario: Retorna todos os funcionários.
+POST /funcionario: Adiciona um novo funcionário.
+PUT /funcionario: Atualiza um funcionário existente.
+GET /funcionario/{id}: Retorna um funcionário específico pelo id.
+DELETE /funcionario/{id}: Exclui um funcionário pelo id.
+
