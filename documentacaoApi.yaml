@@ -1,0 +1,319 @@
+openapi: 3.0.0
+info:
+  title: Empresa e Funcionário API
+  description: API para gerenciar empresas e funcionários.
+  version: 1.0.0
+  contact:
+    name: Suporte
+    email: suporte@empresa.com
+servers:
+  - url: http://localhost:3002
+    description: Servidor local
+
+paths:
+  /empresa:
+    get:
+      tags:
+        - Empresa
+      summary: Retorna todas as empresas
+      responses:
+        '200':
+          description: Lista de empresas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Empresa'
+        '400':
+          description: Erro ao consultar as empresas
+    post:
+      tags:
+        - Empresa
+      summary: Adiciona uma nova empresa
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NovaEmpresa'
+      responses:
+        '200':
+          description: Empresa criada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmpresaResposta'
+        '400':
+          description: Erro ao inserir a empresa
+    put:
+      tags:
+        - Empresa
+      summary: Atualiza uma empresa existente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmpresaAtualizar'
+      responses:
+        '200':
+          description: Empresa atualizada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmpresaResposta'
+        '400':
+          description: Erro ao atualizar a empresa
+
+  /empresa/{codigo}:
+    get:
+      tags:
+        - Empresa
+      summary: Retorna uma empresa pelo código
+      parameters:
+        - in: path
+          name: codigo
+          schema:
+            type: integer
+          required: true
+          description: Código da empresa
+      responses:
+        '200':
+          description: Empresa encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Empresa'
+        '400':
+          description: Erro ao recuperar a empresa
+    delete:
+      tags:
+        - Empresa
+      summary: Exclui uma empresa pelo código
+      parameters:
+        - in: path
+          name: codigo
+          schema:
+            type: integer
+          required: true
+          description: Código da empresa
+      responses:
+        '200':
+          description: Empresa removida com sucesso
+        '400':
+          description: Erro ao remover a empresa
+
+  /funcionario:
+    get:
+      tags:
+        - Funcionario
+      summary: Retorna todos os funcionários
+      responses:
+        '200':
+          description: Lista de funcionários
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Funcionario'
+        '400':
+          description: Erro ao consultar funcionários
+    post:
+      tags:
+        - Funcionario
+      summary: Adiciona um novo funcionário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NovoFuncionario'
+      responses:
+        '200':
+          description: Funcionário adicionado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Funcionario'
+        '400':
+          description: Erro ao adicionar funcionário
+    put:
+      tags:
+        - Funcionario
+      summary: Atualiza um funcionário existente
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FuncionarioAtualizar'
+      responses:
+        '200':
+          description: Funcionário atualizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FuncionarioResposta'
+        '400':
+          description: Erro ao atualizar funcionário
+
+  /funcionario/{id}:
+    get:
+      tags:
+        - Funcionario
+      summary: Retorna um funcionário pelo código
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Código do funcionário
+      responses:
+        '200':
+          description: Funcionário encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Funcionario'
+        '400':
+          description: Erro ao recuperar o funcionário
+    delete:
+      tags:
+        - Funcionario
+      summary: Exclui um funcionário pelo código
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Código do funcionário
+      responses:
+        '200':
+          description: Funcionário removido com sucesso
+        '400':
+          description: Erro ao remover funcionário
+
+components:
+  schemas:
+    Empresa:
+      type: object
+      properties:
+        codigo:
+          type: integer
+        cnpj:
+          type: string
+        nome:
+          type: string
+        razaosocial:
+          type: string
+        sigla:
+          type: string
+
+    NovaEmpresa:
+      type: object
+      required:
+        - cnpj
+        - nome
+        - razaosocial
+        - sigla
+      properties:
+        cnpj:
+          type: string
+        nome:
+          type: string
+        razaosocial:
+          type: string
+        sigla:
+          type: string
+
+    EmpresaAtualizar:
+      type: object
+      required:
+        - codigo
+        - cnpj
+        - nome
+        - razaosocial
+        - sigla
+      properties:
+        codigo:
+          type: integer
+        cnpj:
+          type: string
+        nome:
+          type: string
+        razaosocial:
+          type: string
+        sigla:
+          type: string
+
+    EmpresaResposta:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        objeto:
+          $ref: '#/components/schemas/Empresa'
+
+    Funcionario:
+      type: object
+      properties:
+        codigo:
+          type: integer
+        cpf:
+          type: string
+        nome:
+          type: string
+        rg:
+          type: string
+        empresa:
+          type: integer
+
+    NovoFuncionario:
+      type: object
+      required:
+        - cpf
+        - nome
+        - rg
+        - empresa
+      properties:
+        cpf:
+          type: string
+        nome:
+          type: string
+        rg:
+          type: string
+        empresa:
+          type: integer
+
+    FuncionarioAtualizar:
+      type: object
+      required:
+        - codigo
+        - cpf
+        - nome
+        - rg
+      properties:
+        codigo:
+          type: integer
+        cpf:
+          type: string
+        nome:
+          type: string
+        rg:
+          type: string
+
+    FuncionarioResposta:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+        objeto:
+          $ref: '#/components/schemas/Funcionario'
